@@ -10,8 +10,8 @@ export default function Home({ cart, setCart }) {
   useEffect(() => {
     // Fetch products and packages concurrently
     Promise.all([
-      fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products').then(res => res.json()),
-      fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/packages').then(res => res.json())
+      fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products`).then(res => res.json()),
+      fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/packages`).then(res => res.json())
     ])
     .then(([productsData, packagesData]) => {
       setProducts(productsData);

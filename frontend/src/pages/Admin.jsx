@@ -30,7 +30,7 @@ export default function Admin() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products');
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products`);
       setProducts(await res.json());
     } catch (err) {
       console.error(err);
@@ -39,7 +39,7 @@ export default function Admin() {
 
   const fetchPackages = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/packages');
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/packages`);
       setPackages(await res.json());
     } catch (err) {
       console.error(err);
@@ -48,7 +48,7 @@ export default function Admin() {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/orders', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/orders`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -62,7 +62,7 @@ export default function Admin() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/login', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -96,7 +96,7 @@ export default function Admin() {
     if (newProduct.image) formData.append('image', newProduct.image);
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/products', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/products`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }, // Hapus Content-Type agar browser set otomatis multipart/form-data
         body: formData
@@ -114,7 +114,7 @@ export default function Admin() {
     if (!window.confirm('Yakin ingin menghapus produk ini?')) return;
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/products/${id}`, {
-        method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }
+        method: `DELETE', headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) fetchProducts();
     } catch (err) { console.error(err); }
@@ -132,7 +132,7 @@ export default function Admin() {
 
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/products/${editingId}`, {
-        method: 'PUT',
+        method: `PUT',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
       });
@@ -148,7 +148,7 @@ export default function Admin() {
   const handleAddPackage = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/packages', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/packages`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(newPackage)
@@ -164,7 +164,7 @@ export default function Admin() {
     if (!window.confirm('Yakin ingin menghapus paket ini? Menu di dalamnya akan menjadi tanpa paket.')) return;
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/packages/${id}`, {
-        method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }
+        method: `DELETE', headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) { fetchPackages(); fetchProducts(); }
     } catch (err) { console.error(err); }
@@ -173,7 +173,7 @@ export default function Admin() {
   const handleSavePkgEdit = async () => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/packages/${editingPkgId}`, {
-        method: 'PUT',
+        method: `PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(editingPkg)
       });
@@ -189,7 +189,7 @@ export default function Admin() {
   const handleUpdateOrderStatus = async (id, status) => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/orders/${id}/status`, {
-        method: 'PUT',
+        method: `PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ status })
       });
