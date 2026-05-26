@@ -362,7 +362,7 @@ export default function Admin() {
             <textarea placeholder="Deskripsi Menu" value={newProduct.description} onChange={e => setNewProduct({...newProduct, description: e.target.value})} required style={{gridColumn: '1 / -1'}} />
             <div style={{gridColumn: '1 / -1'}}>
               <label style={{display: 'block', marginBottom: '5px'}}>Upload Foto Menu:</label>
-              <input id="file-upload-new" type="text" placeholder="URL Gambar (opsional)" value={newProduct.image_url} onChange={e => setNewProduct({...newProduct, image_url: e.target.value})} style={{width: '100%', padding: '10px', background: '#111', color: 'white', border: '1px solid #444'}} /> setNewProduct({...newProduct, image: e.target.files[0]})} style={{width: '100%', padding: '10px', background: '#111', color: 'white', border: '1px solid #444'}} />
+              <input id="file-upload-new" type="text" placeholder="URL Gambar (opsional)" value={newProduct.image_url || ''} onChange={e => setNewProduct({...newProduct, image_url: e.target.value})} style={{width: '100%', padding: '10px', background: '#111', color: 'white', border: '1px solid #444'}} />
             </div>
             <button type="submit" className="btn-add" style={{gridColumn: '1 / -1'}}>Simpan Menu Baru</button>
           </form>
