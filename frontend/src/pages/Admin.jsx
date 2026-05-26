@@ -114,7 +114,7 @@ export default function Admin() {
     if (!window.confirm('Yakin ingin menghapus produk ini?')) return;
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/products/${id}`, {
-        method: `DELETE', headers: { 'Authorization': `Bearer ${token}` }
+        method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) fetchProducts();
     } catch (err) { console.error(err); }
@@ -132,7 +132,7 @@ export default function Admin() {
 
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/products/${editingId}`, {
-        method: `PUT',
+        method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
       });
@@ -164,7 +164,7 @@ export default function Admin() {
     if (!window.confirm('Yakin ingin menghapus paket ini? Menu di dalamnya akan menjadi tanpa paket.')) return;
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/packages/${id}`, {
-        method: `DELETE', headers: { 'Authorization': `Bearer ${token}` }
+        method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) { fetchPackages(); fetchProducts(); }
     } catch (err) { console.error(err); }
@@ -173,7 +173,7 @@ export default function Admin() {
   const handleSavePkgEdit = async () => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/packages/${editingPkgId}`, {
-        method: `PUT',
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(editingPkg)
       });
@@ -189,7 +189,7 @@ export default function Admin() {
   const handleUpdateOrderStatus = async (id, status) => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/orders/${id}/status`, {
-        method: `PUT',
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ status })
       });

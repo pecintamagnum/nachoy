@@ -43,7 +43,7 @@ export default function History({ cartCount }) {
     if (!window.confirm('Yakin ingin membatalkan pesanan ini?')) return;
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/${id}/cancel`, {
-        method: `POST'
+        method: 'POST'
       });
       const data = await res.json();
       if (res.ok) {
