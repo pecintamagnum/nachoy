@@ -10,8 +10,8 @@ export default function Home({ cart, setCart }) {
   useEffect(() => {
     // Fetch products and packages concurrently
     Promise.all([
-      fetch('https://nachoy.vercel.app/api/products').then(res => res.json()),
-      fetch('https://nachoy.vercel.app/api/packages').then(res => res.json())
+      fetch(`https://nachoy.vercel.app/api/products`).then(res => res.json()),
+      fetch(`https://nachoy.vercel.app/api/packages`).then(res => res.json())
     ])
     .then(([productsData, packagesData]) => {
       setProducts(productsData);
