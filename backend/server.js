@@ -269,7 +269,7 @@ app.post('/api/admin/products', verifyToken, async (req, res) => {
   try {
     await db.query(
       'INSERT INTO products (name, description, price, image_url, stock, package_id) VALUES (?, ?, ?, ?, ?, ?)',
-      [name, description, price, imageUrl, stock, package_id || null]
+      [name, description, price, image_url, stock, package_id || null]
     );
     res.status(201).json({ message: 'Produk berhasil ditambahkan' });
   } catch (error) {
@@ -286,7 +286,7 @@ app.put('/api/admin/products/:id', verifyToken, async (req, res) => {
   try {
     await db.query(
       'UPDATE products SET name = ?, description = ?, price = ?, image_url = ?, stock = ?, package_id = ? WHERE id = ?',
-      [name, description, price, imageUrl, stock, package_id || null, id]
+      [name, description, price, image_url, stock, package_id || null, id]
     );
     res.json({ message: 'Produk berhasil diupdate' });
   } catch (error) {
