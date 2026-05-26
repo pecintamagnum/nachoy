@@ -124,22 +124,20 @@ export default function Admin() {
   };
 
   const handleSaveEdit = async () => {
-    
     const payload = {
-      name: newProduct.name,
-      description: newProduct.description,
-      price: newProduct.price,
-      stock: newProduct.stock,
-      package_id: newProduct.package_id || null,
-      image_url: newProduct.image_url
+      name: editingProduct.name,
+      description: editingProduct.description,
+      price: editingProduct.price,
+      stock: editingProduct.stock,
+      package_id: editingProduct.package_id || null,
+      image_url: editingProduct.image_url
     };
 
     try {
-      const res = await fetch(`https://nachoy.vercel.app/api/admin/products`, {
-        method: 'POST',
+      const res = await fetch(`https://nachoy.vercel.app/api/admin/products/${editingId}`, {
+        method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-
       });
       if (res.ok) {
         setEditingId(null);
