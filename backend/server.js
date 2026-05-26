@@ -151,7 +151,7 @@ app.post('/api/orders/:id/cancel', async (req, res) => {
       return res.status(400).json({ message: 'Batas waktu pembatalan 5 menit sudah lewat' });
     }
     
-    await connection.query('UPDATE orders SET status = "cancelled" WHERE id = ?', [id]);
+    await connection.query('UPDATE orders SET status = \'cancelled\' WHERE id = ?', [id]);
     
     const [items] = await connection.query('SELECT * FROM order_items WHERE order_id = ?', [id]);
     for (const item of items) {

@@ -110,7 +110,7 @@ function Checkout({ cart, setCart }) {
         const waUrl = `https://wa.me/6281210845680?text=${encodeURIComponent(orderText)}`;
         
         alert('Checkout berhasil! Anda akan diarahkan ke WhatsApp untuk mengirim pesanan ke Admin.');
-        window.open(waUrl, '_blank');
+        window.location.href = waUrl;
         
         setCart([]);
         setCustomerName('');
