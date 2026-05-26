@@ -20,7 +20,7 @@ export default function History({ cartCount }) {
     }
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/history`, {
+      const res = await fetch('https://nachoy.vercel.app/api/orders/history', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ orderIds: savedOrderIds })
@@ -42,7 +42,7 @@ export default function History({ cartCount }) {
   const handleCancel = async (id) => {
     if (!window.confirm('Yakin ingin membatalkan pesanan ini?')) return;
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/orders/${id}/cancel`, {
+      const res = await fetch('https://nachoy.vercel.app/api/orders/${id}/cancel', {
         method: 'POST'
       });
       const data = await res.json();
