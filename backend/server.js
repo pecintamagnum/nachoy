@@ -263,15 +263,9 @@ app.put('/api/admin/orders/:id/status', verifyToken, async (req, res) => {
 });
 
 // Tambah produk (Admin) - dengan upload foto
-app.post('/api/admin/products', verifyToken, upload.single('image'), async (req, res) => {
-  const { name, description, price, stock, package_id } = req.body;
+app.post('/api/admin/products', verifyToken, async (req, res) => {
+  const { name, description, price, stock, package_id, image_url } = req.body;
   
-  // Jika ada file yg diupload, buat URL lokal. Jika tidak, gunakan body.image_url (URL external) jika ada.
-  let imageUrl = req.body.image_url || '';
-  if (req.file) {
-    imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
-  }
-
   try {
     await db.query(
       'INSERT INTO products (name, description, price, image_url, stock, package_id) VALUES (?, ?, ?, ?, ?, ?)',
@@ -285,15 +279,9 @@ app.post('/api/admin/products', verifyToken, upload.single('image'), async (req,
 });
 
 // Update produk (Admin) - dengan upload foto
-app.put('/api/admin/products/:id', verifyToken, upload.single('image'), async (req, res) => {
+app.put('/api/admin/products/:id', verifyToken, async (req, res) => {
   const { id } = req.params;
-  const { name, description, price, stock, package_id } = req.body;
-  
-  // Jika ada file yg diupload, gunakan foto baru. Jika tidak, gunakan foto lama (dikirim via image_url).
-  let imageUrl = req.body.image_url;
-  if (req.file) {
-    imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
-  }
+  const { name, description, price, stock, package_id, image_url } = req.body;
 
   try {
     await db.query(

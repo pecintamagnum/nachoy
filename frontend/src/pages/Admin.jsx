@@ -10,7 +10,7 @@ export default function Admin() {
   const [packages, setPackages] = useState([]);
   const [orders, setOrders] = useState([]);
   
-  const [newProduct, setNewProduct] = useState({ name: '', description: '', price: '', image: null, stock: '', package_id: '' });
+  const [newProduct, setNewProduct] = useState({ name: '', description: '', price: '', image_url: '', stock: '', package_id: '' });
   const [editingId, setEditingId] = useState(null);
   const [editingProduct, setEditingProduct] = useState(null);
 
@@ -87,22 +87,25 @@ export default function Admin() {
   // --- PRODUCT CRUD ---
   const handleAddProduct = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('name', newProduct.name);
-    formData.append('description', newProduct.description);
-    formData.append('price', newProduct.price);
-    formData.append('stock', newProduct.stock);
-    if (newProduct.package_id) formData.append('package_id', newProduct.package_id);
-    if (newProduct.image) formData.append('image', newProduct.image);
+    
+    const payload = {
+      name: newProduct.name,
+      description: newProduct.description,
+      price: newProduct.price,
+      stock: newProduct.stock,
+      package_id: newProduct.package_id || null,
+      image_url: newProduct.image_url
+    };
 
     try {
       const res = await fetch(`https://nachoy.vercel.app/api/admin/products`, {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` }, // Hapus Content-Type agar browser set otomatis multipart/form-data
-        body: formData
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+
       });
       if (res.ok) {
-        setNewProduct({ name: '', description: '', price: '', image: null, stock: '', package_id: '' });
+        setNewProduct({ name: '', description: '', price: '', image_url: '', stock: '', package_id: '' });
         // Reset input file value workaround (if any)
         document.getElementById('file-upload-new').value = '';
         fetchProducts();
@@ -121,20 +124,22 @@ export default function Admin() {
   };
 
   const handleSaveEdit = async () => {
-    const formData = new FormData();
-    formData.append('name', editingProduct.name);
-    formData.append('description', editingProduct.description);
-    formData.append('price', editingProduct.price);
-    formData.append('stock', editingProduct.stock);
-    if (editingProduct.package_id) formData.append('package_id', editingProduct.package_id);
-    if (editingProduct.image_url) formData.append('image_url', editingProduct.image_url); // existing URL
-    if (editingProduct.image) formData.append('image', editingProduct.image); // new file
+    
+    const payload = {
+      name: newProduct.name,
+      description: newProduct.description,
+      price: newProduct.price,
+      stock: newProduct.stock,
+      package_id: newProduct.package_id || null,
+      image_url: newProduct.image_url
+    };
 
     try {
-      const res = await fetch(`https://nachoy.vercel.app/api/admin/products/${editingId}`, {
-        method: 'PUT',
-        headers: { 'Authorization': `Bearer ${token}` },
-        body: formData
+      const res = await fetch(`https://nachoy.vercel.app/api/admin/products`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+
       });
       if (res.ok) {
         setEditingId(null);
@@ -357,7 +362,7 @@ export default function Admin() {
             <textarea placeholder="Deskripsi Menu" value={newProduct.description} onChange={e => setNewProduct({...newProduct, description: e.target.value})} required style={{gridColumn: '1 / -1'}} />
             <div style={{gridColumn: '1 / -1'}}>
               <label style={{display: 'block', marginBottom: '5px'}}>Upload Foto Menu:</label>
-              <input id="file-upload-new" type="file" accept="image/*" onChange={e => setNewProduct({...newProduct, image: e.target.files[0]})} style={{width: '100%', padding: '10px', background: '#111', color: 'white', border: '1px solid #444'}} />
+              <input id="file-upload-new" type="text" placeholder="URL Gambar (opsional)" value={newProduct.image_url} onChange={e => setNewProduct({...newProduct, image_url: e.target.value})} style={{width: '100%', padding: '10px', background: '#111', color: 'white', border: '1px solid #444'}} /> setNewProduct({...newProduct, image: e.target.files[0]})} style={{width: '100%', padding: '10px', background: '#111', color: 'white', border: '1px solid #444'}} />
             </div>
             <button type="submit" className="btn-add" style={{gridColumn: '1 / -1'}}>Simpan Menu Baru</button>
           </form>
@@ -383,7 +388,7 @@ export default function Admin() {
                   <>
                     <td>
                       <input type="text" value={editingProduct.name} onChange={e => setEditingProduct({...editingProduct, name: e.target.value})} style={{width: '90%', padding: '5px', background: '#222', color: 'white', border: '1px solid #444', marginBottom: '5px'}} />
-                      <input type="file" accept="image/*" onChange={e => setEditingProduct({...editingProduct, image: e.target.files[0]})} style={{width: '90%', padding: '5px', background: '#222', color: 'white', border: '1px solid #444', fontSize: '0.8rem'}} title="Ganti foto" />
+                      <input type="text" placeholder="URL Gambar" value={editingProduct.image_url || ''} onChange={e => setEditingProduct({...editingProduct, image_url: e.target.value})} style={{width: '90%', padding: '5px', background: '#222', color: 'white', border: '1px solid #444', fontSize: '0.8rem'}} title="Ganti foto URL" />
                     </td>
                     <td>
                       <select value={editingProduct.package_id || ''} onChange={e => setEditingProduct({...editingProduct, package_id: e.target.value})} style={{padding: '5px', background: '#222', color: 'white', border: '1px solid #444'}}>
